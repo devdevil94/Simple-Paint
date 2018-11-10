@@ -7,6 +7,8 @@ var clickX = new Array();
 var clickY = new Array();
 var clickDrag = new Array();
 var clickColor = new Array();
+var clickSize = new Array();
+
 var painting;
 
 var colorPurple = "#cb3594";
@@ -15,7 +17,8 @@ var colorYellow = "#ffcf33";
 var colorBrown = "#986928";
 
 var curColor = colorGreen;
-
+var curSize = "small";
+var radius = 18;
 
 canvas.addEventListener('mousedown', startPaint);
 canvas.addEventListener('mousemove', paint);
@@ -59,14 +62,13 @@ function addClick(x, y, dragging){
 	clickY.push(y);
 	clickDrag.push(dragging);
 	clickColor.push(curColor);
+	clickSize.push(curSize);
 }
 
 function updateCanvas(){
 	cxt.clearRect(0, 0, cxt.canvas.width, cxt.canvas.height);
 
-	//cxt.strokeStyle = "#000000";
 	cxt.lineJoin = "round";
-	cxt.lineWidth = 5;
 
 	for(var i=0; i < clickX.length; i++) {		
     	cxt.beginPath();
@@ -80,6 +82,7 @@ function updateCanvas(){
 		cxt.lineTo(clickX[i], clickY[i]);
 		cxt.closePath();
 		cxt.strokeStyle = clickColor[i];
+		cxt.lineWidth = radius;
 		cxt.stroke();
   	}
 }

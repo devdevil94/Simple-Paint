@@ -6,24 +6,39 @@ var cxt = canvas.getContext('2d');
 var clickX = new Array();
 var clickY = new Array();
 var clickDrag = new Array();
-var paint;
+var painting;
 
-
-
-test();
-
-
-
+canvas.addEventListener('mousedown', startPaint);
+canvas.addEventListener('mousemove', paint);
 
 
 
 
 
-function test(){
-	for(var i=0; i < 90; i++) 
-		addClick(i,i,true);
 
-	draw();
+
+
+
+
+function paint(){
+	var mouseX = event.clientX - this.offsetLeft;
+	var mouseY = event.clientY - this.offsetTop;
+
+	if(painting){
+		addClick(mouseX, mouseY);
+		updateCanvas();
+	}
+
+}
+
+function startPaint(event){
+	var mouseX = event.clientX - this.offsetLeft;
+	var mouseY = event.clientY - this.offsetTop;
+
+	painting = true;
+
+	addClick(mouseX, mouseY);
+	updateCanvas();
 }
 
 function addClick(x, y, dragging){
@@ -32,7 +47,7 @@ function addClick(x, y, dragging){
 	clickDrag.push(dragging);
 }
 
-function draw(){
+function updateCanvas(){
 	cxt.clearRect(0, 0, cxt.canvas.width, cxt.canvas.height);
 
 	cxt.strokeStyle = "#000000";
